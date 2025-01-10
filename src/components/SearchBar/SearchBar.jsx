@@ -1,7 +1,7 @@
 import css from "./SearchBar.module.css";
 import { useState } from "react";
 import searchIcon from "../../assets/search.svg";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
 
 const SearchBar = ({ handleSearch, query }) => {
   const [value, setValue] = useState("");
@@ -11,7 +11,7 @@ const SearchBar = ({ handleSearch, query }) => {
     if (value.trim()) {
       handleSearch(value);
     } else {
-      toast.error('Please enter a search term');
+      toast.error("Please enter a search term");
       console.log("Please enter a search term");
     }
   };

@@ -13,7 +13,6 @@ const App = () => {
   const [images, setImages] = useState([]);
   const [query, setQuery] = useState("");
   const [numberPage, setNumberPage] = useState(0);
-  // const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [totalPages, setTotalPages] = useState(0);
   const [loader, setLoader] = useState(false);
@@ -30,10 +29,10 @@ const App = () => {
         setLoader(true);
         setError(false);
         const data = await getFetchSearch(query, numberPage);
-        // console.log(query,numberPage)
-        console.log(data.total_pages);
         setTotalPages(data.total_pages);
-
+        if (data.total_pages === 0) {
+          toast("We don't have images for this query");
+        }
         setImages((prevState) => {
           return [...prevState, ...data.results];
         });
@@ -49,23 +48,27 @@ const App = () => {
 
   const handleSearch = (query) => {
     if (!query.trim()) {
-      console.log("Please fill");
       toast.error("Please fill in the search field!");
       return;
     }
+    setQuery((prevQuery) => {
+      if (prevQuery === query && numberPage === 1) {
+        toast.error(
+          "The query is the same as the previous one. Please try a different query."
+        );
+      }
+    });
+
     setQuery(query);
     setImages([]);
     setNumberPage(1);
-    // setShowToastContainer(true);
   };
 
   const onLoadMoreBtn = () => {
     if (numberPage < totalPages) {
-      // if (page < totalPages) {
       setNumberPage((prevPage) => prevPage + 1);
     } else {
-      toast.info("No more images to load.");
-      // console.log("No more images to load.");
+      toast("No more images to load.");
     }
   };
 
@@ -80,7 +83,6 @@ const App = () => {
         {images.length > 0 && numberPage < totalPages && !loader && (
           <LoadMoreBtn onLoadMoreBtn={onLoadMoreBtn} />
         )}
-
         {selectedImage && (
           <ImageModal modalImg={selectedImage} onClose={closeModal} />
         )}

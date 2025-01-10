@@ -10,11 +10,6 @@ const ImageGallery = ({ images, onImageClick }) => {
             <li key={image.id} className={css.galleryItem}>
               <ImageCard
                 key={image.id}
-                // openModal={() => {
-                //   this.openModal(image.id);
-                // }}
-
-                // smallImg={image.webformatURL}
                 onClick={() => onImageClick(image)}
                 photo={image}
               />
