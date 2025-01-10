@@ -1,0 +1,15 @@
+.buttonPagination {
+  margin: 20px auto;
+  display: block;
+  padding: 10px 25px;
+  background-color: rgb(106, 106, 250);
+  color: white;
+  text-align: center;
+  border: rgb(106, 106, 250);
+  outline: none;
+  border-radius: 5%;
+}
+.buttonPagination:hover, .buttonPagination:focus {
+  background-color: rgb(81, 81, 250);
+  border: rgb(81, 81, 250);
+}
