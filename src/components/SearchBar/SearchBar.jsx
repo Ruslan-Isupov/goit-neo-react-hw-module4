@@ -12,7 +12,7 @@ const SearchBar = ({ handleSearch, query }) => {
       handleSearch(value);
     } else {
       toast.error('Please enter a search term');
-      // console.log("Please enter a search term");
+      console.log("Please enter a search term");
     }
   };
 

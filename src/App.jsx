@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import SearchBar from "./components/SearchBar/SearchBar";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
 import ImageModal from "./components/ImageModal/ImageModal";
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
-import Loader from "./components/LoadMoreBtn/LoadMoreBtn";
+import Loader from "./components/Loader/Loader";
 import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
 import css from "./App.module.css";
 
@@ -19,9 +19,8 @@ const App = () => {
   const [loader, setLoader] = useState(false);
   const [error, setError] = useState(false);
 
- const openModal = (image) => setSelectedImage(image);
- const closeModal = () => setSelectedImage(null);
-
+  const openModal = (image) => setSelectedImage(image);
+  const closeModal = () => setSelectedImage(null);
 
   useEffect(() => {
     if (!query) return;
@@ -32,7 +31,7 @@ const App = () => {
         setError(false);
         const data = await getFetchSearch(query, numberPage);
         // console.log(query,numberPage)
-        // console.log(data);
+        console.log(data.total_pages);
         setTotalPages(data.total_pages);
 
         setImages((prevState) => {
@@ -50,7 +49,7 @@ const App = () => {
 
   const handleSearch = (query) => {
     if (!query.trim()) {
-      // console.log(query);
+      console.log("Please fill");
       toast.error("Please fill in the search field!");
       return;
     }
@@ -69,23 +68,22 @@ const App = () => {
       // console.log("No more images to load.");
     }
   };
-  
+
   return (
     <>
       <Toaster position="top-right" />
       <SearchBar handleSearch={handleSearch} />
       <div className={css.container}>
         {error && <ErrorMessage message={error} />}
-        <ImageGallery
-          images={images}
-          onImageClick={openModal}
-        />
+        <ImageGallery images={images} onImageClick={openModal} />
         {loader && <Loader />}
-         {images.length > 0 && numberPage < totalPages && !loader && (
-                    <LoadMoreBtn onLoadMoreBtn={onLoadMoreBtn} />
-                )}
-       
-         {selectedImage && <ImageModal modalImg={selectedImage} onClose={closeModal} />}
+        {images.length > 0 && numberPage < totalPages && !loader && (
+          <LoadMoreBtn onLoadMoreBtn={onLoadMoreBtn} />
+        )}
+
+        {selectedImage && (
+          <ImageModal modalImg={selectedImage} onClose={closeModal} />
+        )}
       </div>
     </>
   );
