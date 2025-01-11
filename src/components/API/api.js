@@ -1,6 +1,7 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "https://api.unsplash.com";
+// axios.defaults.baseURL = "https://api.unsplash.com";
+axios.defaults.baseURL = "https://api.unsplask.com";
 // const KEY = "yUc5DXIQP33co1ra5iQZonfSid97FVKA7jUSQ4Sziqg";
 
 const getFetchSearch = async (query, numberPage) => {

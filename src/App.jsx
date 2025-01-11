@@ -46,20 +46,20 @@ const App = () => {
     searchImages();
   }, [query, numberPage]);
 
-  const handleSearch = (query) => {
-    if (!query.trim()) {
+  const handleSearch = (newQuery) => {
+    if (!newQuery.trim()) {
       toast.error("Please fill in the search field!");
       return;
     }
-    setQuery((prevQuery) => {
-      if (prevQuery === query && numberPage === 1) {
-        toast.error(
-          "The query is the same as the previous one. Please try a different query."
-        );
-      }
-    });
-
-    setQuery(query);
+    if (newQuery === query && numberPage === 1) {
+      toast.error(
+        "The query is the same as the previous one. Please try a different query."
+      );
+      setQuery("");
+      setImages([]);
+      return;
+    }
+    setQuery(newQuery);
     setImages([]);
     setNumberPage(1);
   };
@@ -77,7 +77,9 @@ const App = () => {
       <Toaster position="top-right" />
       <SearchBar handleSearch={handleSearch} />
       <div className={css.container}>
-        {error && <ErrorMessage message={error} />}
+        {error && (
+          <ErrorMessage message="Something went wrong. Please try again." />
+        )}
         <ImageGallery images={images} onImageClick={openModal} />
         {loader && <Loader />}
         {images.length > 0 && numberPage < totalPages && !loader && (

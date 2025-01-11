@@ -1,6 +1,10 @@
+// import toast from "react-hot-toast";
+import css from "./ErrorMessage.module.css";
 const ErrorMessage = ({ message }) => {
-  console.log(message);
-  return <div>{message}</div>;
+
+  // toast.error(message)
+  return <div className={css.error}>{message}</div>;
+  
 };
 
 export default ErrorMessage;
